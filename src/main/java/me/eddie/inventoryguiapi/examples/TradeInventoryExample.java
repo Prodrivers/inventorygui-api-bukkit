@@ -334,7 +334,7 @@ public class TradeInventoryExample implements GUIActionListener,GUIContentsProvi
             toDisplay.add( //Add an item in the middle of the GUI to divide it
                     GUIElementFactory.createActionItem(
                             GUIElementFactory.formatItem(
-                                    new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 15), //Black stained glass pane
+                                    new ItemStack(Material.BLACK_STAINED_GLASS_PANE, 1), //Black stained glass pane
                                     "Divider"), //Give the item the name divider
                             new Callback<Player>() {
                                 @Override
@@ -350,8 +350,7 @@ public class TradeInventoryExample implements GUIActionListener,GUIContentsProvi
         toDisplay.add(GUIElementFactory.createActionItem(48, //Put this in slot 48
                 //The item to be displayed
                 GUIElementFactory.formatItem(
-                        new ItemStack(Material.WOOL, 1, //Colored wool, if confirmed already then green, if not then yellow
-                                (byte) (leftPlayerConfirmed ? DyeColor.GREEN.getWoolData() : DyeColor.YELLOW.getWoolData())),
+                        new ItemStack((leftPlayerConfirmed ? Material.GREEN_WOOL : Material.YELLOW_WOOL), 1), //Colored wool, if confirmed already then green, if not then yellow
                         //The name of the item, changes depending on if already confirmed
                         ChatColor.YELLOW + (leftPlayerConfirmed ? "Unconfirm trade" : "Confirm trade"),
                         ChatColor.WHITE + "Click me to",//Line 1 of lore (item description)
@@ -382,8 +381,7 @@ public class TradeInventoryExample implements GUIActionListener,GUIContentsProvi
         toDisplay.add(GUIElementFactory.createActionItem(48, //Put this in slot 48
                 //The item to be displayed
                 GUIElementFactory.formatItem(
-                        new ItemStack(Material.WOOL, 1, //Colored wool, if confirmed already then green, if not then yellow
-                                (byte) (rightPlayerConfirmed ? DyeColor.GREEN.getWoolData() : DyeColor.YELLOW.getWoolData())),
+                        new ItemStack((rightPlayerConfirmed ? Material.GREEN_WOOL : Material.YELLOW_WOOL), 1), //Colored wool, if confirmed already then green, if not then yellow
                         //The name of the item, changes depending on if already confirmed
                         ChatColor.YELLOW + (rightPlayerConfirmed ? "Unconfirm trade" : "Confirm trade"),
                         ChatColor.WHITE + "Click me to",//Line 1 of lore (item description)

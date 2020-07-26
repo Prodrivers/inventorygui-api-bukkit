@@ -33,8 +33,8 @@ compileJava.options.encoding = 'UTF-8'
 
 
 dependencies {
-    compile group: 'org.spigotmc', name: 'spigot-api', version: '1.11-R0.1-SNAPSHOT' //Spigot (Bukkit for Minecraft 1.9+) API
 	compile group: 'javax.xml.ws', name: 'jaxws-api', version: '2.3.1'
+    compile group: 'org.spigotmc', name: 'spigot-api', version: '1.14.4-R0.1-SNAPSHOT' //Spigot (Bukkit for Minecraft 1.9+) API
     testCompile group: 'junit', name: 'junit', version: '4.13'
     testCompile group: 'org.powermock', name: 'powermock-module-junit4', version: '2.0.2'
     testCompile group: 'org.powermock', name: 'powermock-api-mockito2', version: '2.0.2'

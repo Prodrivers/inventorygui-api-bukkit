@@ -71,10 +71,11 @@ public class GUIPresenter {
         }
 
         Inventory inventory = viewer.getOpenInventory() == null ? null : viewer.getOpenInventory().getTopInventory(); //Get inventory currently being viewed
+		InventoryView inventoryView = viewer.getOpenInventory();
         if(inventory != null &&
                 (GUISession.extractSession(inventory) == null || !GUISession.extractSession(inventory).equals(session)
                         || inventory.getSize() != requiredSize
-                        || !inventory.getTitle().equals(inventoryState.getTitle()))){ //If the existing inventory is unusable
+                        || !inventoryView.getTitle().equals(inventoryState.getTitle()))){ //If the existing inventory is unusable
             inventory = null;
         }
 
