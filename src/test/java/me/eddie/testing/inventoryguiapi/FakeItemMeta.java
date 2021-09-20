@@ -1,8 +1,15 @@
 package me.eddie.testing.inventoryguiapi;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.tags.CustomItemTagContainer;
+import org.bukkit.persistence.PersistentDataContainer;
 
 import java.util.*;
 
@@ -11,10 +18,13 @@ import java.util.*;
  */
 public class FakeItemMeta implements ItemMeta {
     private String displayName = null;
+    private String localizedName = null;
     private List<String> lore = new ArrayList<String>();
     private Map<Enchantment, Integer> enchants = new HashMap<Enchantment, Integer>();
     private List<ItemFlag> itemFlags = new ArrayList<ItemFlag>();
     private boolean unbreakable = false;
+    private int customModelData = -1;
+    private Multimap<Attribute, AttributeModifier> attributeModifiers = HashMultimap.create();
 
     public FakeItemMeta(){
 
@@ -59,6 +69,21 @@ public class FakeItemMeta implements ItemMeta {
     }
 
     @Override
+    public boolean hasLocalizedName() {
+        return localizedName != null;
+    }
+
+    @Override
+    public String getLocalizedName() {
+        return localizedName;
+    }
+
+    @Override
+    public void setLocalizedName( String name ) {
+        this.localizedName = name;
+    }
+
+    @Override
     public boolean hasLore() {
         return this.lore != null && this.lore.size() > 0;
     }
@@ -71,6 +96,21 @@ public class FakeItemMeta implements ItemMeta {
     @Override
     public void setLore(List<String> lore) {
         this.lore = new ArrayList<String>(lore);
+    }
+
+    @Override
+    public boolean hasCustomModelData() {
+        return customModelData != -1;
+    }
+
+    @Override
+    public int getCustomModelData() {
+        return customModelData;
+    }
+
+    @Override
+    public void setCustomModelData(Integer data) {
+        this.customModelData = data;
     }
 
     @Override
@@ -149,6 +189,61 @@ public class FakeItemMeta implements ItemMeta {
     }
 
     @Override
+    public boolean hasAttributeModifiers() {
+        return !this.attributeModifiers.isEmpty();
+    }
+
+    @Override
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers() {
+        return this.attributeModifiers;
+    }
+
+    @Override
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
+        return this.attributeModifiers;
+    }
+
+    @Override
+    public Collection<AttributeModifier> getAttributeModifiers(Attribute attribute) {
+        return attributeModifiers.get(attribute);
+    }
+
+    @Override
+    public boolean addAttributeModifier(Attribute attribute, AttributeModifier modifier) {
+        return this.attributeModifiers.put(attribute, modifier);
+    }
+
+    @Override
+    public void setAttributeModifiers(Multimap<Attribute, AttributeModifier> attributeModifiers) {
+        this.attributeModifiers = attributeModifiers;
+    }
+
+    @Override
+    public boolean removeAttributeModifier(Attribute attribute) {
+        return !attributeModifiers.removeAll(attribute).isEmpty();
+    }
+
+    @Override
+    public boolean removeAttributeModifier(EquipmentSlot slot) {
+        return false;
+    }
+
+    @Override
+    public boolean removeAttributeModifier(Attribute attribute, AttributeModifier modifier) {
+        return attributeModifiers.remove(attribute, modifier);
+    }
+
+    @Override
+    public CustomItemTagContainer getCustomTagContainer() {
+        return null;
+    }
+
+    @Override
+    public void setVersion( int version ) {
+
+    }
+
+    @Override
     public ItemMeta clone() {
         return new FakeItemMeta(displayName, lore, enchants, itemFlags, unbreakable);
     }
@@ -162,6 +257,11 @@ public class FakeItemMeta implements ItemMeta {
     @Override
     public Map<String, Object> serialize() {
         //Not used anywhere, so no point implementing
+        return null;
+    }
+
+    @Override
+    public PersistentDataContainer getPersistentDataContainer() {
         return null;
     }
 }
