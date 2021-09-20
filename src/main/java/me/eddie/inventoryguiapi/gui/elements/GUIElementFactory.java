@@ -86,6 +86,18 @@ public class GUIElementFactory {
      * @return The created ActionItem
      */
     public static ActionItem createActionItem(int desiredSlot, ItemStack displayItem, final Callback<Player> onClick){
+        return createActionItem(desiredSlot, displayItem, onClick, FormImage.DEFAULT);
+    }
+
+    /**
+     * Create an ActionItem - A GUIElement that when clicked performs an action
+     * @param desiredSlot The slot you wish for this GUIElement to be placed into in the GUI. Use {@link #createActionItem(ItemStack, ActionItem.ActionHandler)} if you do not care about the placement position of this item.
+     * @param displayItem The item to display in the slot that this GUIElement occupies.
+     * @param onClick Runnable that is ran when item clicked. To re-calculate the contents to be displayed, call to {@link me.eddie.inventoryguiapi.gui.guis.InventoryGUI#updateContentsAndView(Player)}
+     * @param formImage Image to use in Bedrock Form GUI, in place of a texture of provided displayItem
+     * @return The created ActionItem
+     */
+    public static ActionItem createActionItem(int desiredSlot, ItemStack displayItem, final Callback<Player> onClick, FormImage formImage){
         if(onClick == null){
             throw new IllegalArgumentException("Click task must not be null!");
         }
@@ -95,7 +107,7 @@ public class GUIElementFactory {
                 event.getBukkitEvent().setCancelled(true);
                 onClick.call(event.getViewer()); //Runnable doesn't care about the click event (Whether it was left/right click, etc...) - it just wants to run!
             }
-        });
+        }, formImage);
     }
 
     /**
@@ -106,6 +118,18 @@ public class GUIElementFactory {
      * @return The created ActionItem
      */
     public static ActionItem createActionItem(int desiredSlot, ItemStack displayItem, ActionItem.ActionHandler actionHandler){
-        return new ActionItem(desiredSlot, displayItem, actionHandler);
+        return createActionItem(desiredSlot, displayItem, actionHandler, FormImage.DEFAULT);
+    }
+
+    /**
+     * Create an ActionItem - A GUIElement that when clicked performs an action
+     * @param desiredSlot The slot you wish for this GUIElement to be placed into in the GUI. Use {@link #createActionItem(ItemStack, ActionItem.ActionHandler)} if you do not care about the placement position of this item.
+     * @param displayItem The item to display in the slot that this GUIElement occupies.
+     * @param actionHandler ActionHandler that defines what this ActionItem does when clicked. To re-calculate the contents to be displayed, call to {@link me.eddie.inventoryguiapi.gui.guis.InventoryGUI#updateContentsAndView(Player)}
+     * @param formImage Image to use in Bedrock Form GUI, in place of a texture of provided displayItem
+     * @return The created ActionItem
+     */
+    public static ActionItem createActionItem(int desiredSlot, ItemStack displayItem, ActionItem.ActionHandler actionHandler, FormImage formImage){
+        return new ActionItem(desiredSlot, displayItem, actionHandler, formImage);
     }
 }

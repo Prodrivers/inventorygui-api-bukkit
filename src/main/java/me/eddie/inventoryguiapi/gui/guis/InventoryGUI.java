@@ -43,6 +43,14 @@ public interface InventoryGUI {
      */
     public void handleBukkitEvent(Event event, GUISession session);
 
+    /**
+     * Handle a Bedrock form response
+     * @param session         The GUI Session that should respond to the event
+     * @param player          Player that opened the dialog
+     * @param clickedButtonId ID of clicked button, -1 if no button was clicked
+     */
+    public void handleBedrockResponse(GUISession session, Player player, int clickedButtonId);
+
     /*public GUIContentsProvider getContentsProvider();
     public GUIPresenter getGUIPresenter();
     public GUIPopulator getGUIPopulator();*/

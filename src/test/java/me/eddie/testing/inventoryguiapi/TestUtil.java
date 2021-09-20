@@ -14,6 +14,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
@@ -186,9 +187,6 @@ public class TestUtil {
                         int size = (int) args[1];
                         Mockito.when(result.getSize()).thenReturn(size); //Set the size of the mock inventory
 
-                        String title = (String) args[2];
-                        Mockito.when(result.getTitle()).thenReturn(title); //Set the title of the mock inv
-
                         Mockito.when(result.getType()).thenReturn(InventoryType.CHEST); //The inventory type of the mock inv
 
                         //Simulate a contents for this inv
@@ -231,9 +229,6 @@ public class TestUtil {
 
                         InventoryHolder ih = (InventoryHolder) args[0];
                         Mockito.when(result.getHolder()).thenReturn(ih); //Set the holder of the mock inventory
-
-                        String title = (String) args[2];
-                        Mockito.when(result.getTitle()).thenReturn(title); //Set the title of the mock inv
 
                         InventoryType type = (InventoryType) args[1];
                         Mockito.when(result.getSize()).thenReturn(type.getDefaultSize()); //Set the size of the mock inventory

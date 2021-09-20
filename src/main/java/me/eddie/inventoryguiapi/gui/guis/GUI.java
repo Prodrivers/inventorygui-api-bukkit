@@ -2,14 +2,17 @@ package me.eddie.inventoryguiapi.gui.guis;
 
 import me.eddie.inventoryguiapi.gui.contents.GUIContentsProvider;
 import me.eddie.inventoryguiapi.gui.contents.GUIPopulator;
+import me.eddie.inventoryguiapi.gui.contents.LimitedGUIPopulator;
 import me.eddie.inventoryguiapi.gui.elements.GUIElement;
 import me.eddie.inventoryguiapi.gui.events.*;
 import me.eddie.inventoryguiapi.gui.session.GUISession;
 import me.eddie.inventoryguiapi.gui.session.GUIState;
 import me.eddie.inventoryguiapi.gui.session.InventoryState;
 import me.eddie.inventoryguiapi.gui.view.GUIPresenter;
+import me.eddie.inventoryguiapi.gui.view.InventoryGUIPresenter;
 import me.eddie.inventoryguiapi.plugin.EventCaller;
 import me.eddie.inventoryguiapi.plugin.InventoryGUIAPI;
+import me.eddie.inventoryguiapi.util.BedrockUtil;
 import me.eddie.inventoryguiapi.util.Callback;
 import me.eddie.inventoryguiapi.util.GUISettingValidation;
 import me.eddie.inventoryguiapi.util.StackCompatibilityUtil;
@@ -95,7 +98,7 @@ public class GUI implements InventoryGUI {
      * @param guiActionListeners Any ActionListeners that you want to specify. These receive GUIEvents before GUIElements do so that you can further customise the GUI's behaviour
      */
     public GUI(InventoryType inventoryType, int size, boolean isDynamicSize, GUIContentsProvider contentsProvider, GUIActionListener... guiActionListeners){
-        this(inventoryType, size, isDynamicSize, contentsProvider, new GUIPopulator(), new GUIPresenter(), guiActionListeners);
+        this(inventoryType, size, isDynamicSize, contentsProvider, new LimitedGUIPopulator(), new InventoryGUIPresenter(), guiActionListeners);
     }
 
     @Override
@@ -115,10 +118,14 @@ public class GUI implements InventoryGUI {
         guiPopulator.populateGUI(session, player, new Callback<Void>() {
             @Override
             public void call(Void param) {
-                guiPresenter.updateView(player, guiSess); //Show the player the GUI
-                GUIOpenEvent evt = new GUIOpenEvent(guiSess, player);
-                EventCaller.fireThroughBukkit(evt);
-                fireEventThroughActionListeners(evt);
+                try {
+                    guiPresenter.updateView(player, guiSess); //Show the player the GUI
+                    GUIOpenEvent evt = new GUIOpenEvent(guiSess, player);
+                    EventCaller.fireThroughBukkit(evt);
+                    fireEventThroughActionListeners(evt);
+                } catch(Exception e) {
+                    InventoryGUIAPI.getInstance().getLogger().severe(e.getLocalizedMessage());
+                }
             }
         });
     }
@@ -362,21 +369,7 @@ public class GUI implements InventoryGUI {
             return;
         }
         //Call the event where needed
-        EventCaller.fireThroughBukkit(guiEvent);
-        if(guiEvent instanceof Cancellable && ((Cancellable) guiEvent).isCancelled()){ //If event is cancelled don't do any more
-            return;
-        }
-        fireEventThroughActionListeners(guiEvent);
-        if(guiEvent instanceof Cancellable && ((Cancellable) guiEvent).isCancelled()){ //If event is cancelled don't do any more
-            return;
-        }
-
-        if(guiElement != null){
-            guiElement.onEvent(guiEvent);
-        }
-        else {
-            clickEvent.setCancelled(true); //Cancel the bukkit event if they clicked in an empty position in the GUI and that click wasn't cancelled.
-        }
+        fireEvent(guiEvent, guiElement, clickEvent);
     }
 
     //Splits an auto-insert (Shift click) event into pickup and place events that can be handled on a per-slot basis
@@ -491,6 +484,56 @@ public class GUI implements InventoryGUI {
             }
         }
         return;
+    }
+
+    protected <T> void fireEvent(GUIEvent guiEvent, GUIElement guiElement, T receivedEvent) {
+        EventCaller.fireThroughBukkit(guiEvent);
+        if(guiEvent instanceof Cancellable && ((Cancellable) guiEvent).isCancelled()){ //If event is cancelled don't do any more
+            return;
+        }
+        fireEventThroughActionListeners(guiEvent);
+        if(guiEvent instanceof Cancellable && ((Cancellable) guiEvent).isCancelled()){ //If event is cancelled don't do any more
+            return;
+        }
+
+        if(guiElement != null){
+            guiElement.onEvent(guiEvent);
+        }
+        else {
+            //Cancel the bukkit event if they clicked in an empty position in the GUI and that click wasn't cancelled.
+            if(receivedEvent instanceof Cancellable){
+                ((Cancellable) receivedEvent).setCancelled(true);
+            }
+        }
+    }
+
+    @Override
+    public void handleBedrockResponse(GUISession session, Player player, int clickedButtonId) {
+        GUIState guiState = session.getGUIState();
+        InventoryState inventoryState = guiState.getExistingInventoryState(session.getPage());
+        if(inventoryState == null) {
+            throw new RuntimeException("No InventoryState present for GUI interacted with!");
+        }
+
+
+        GUIElement guiElement = (GUIElement) inventoryState.getAttribute(BedrockUtil.getFormButtonIndexToElementKey(clickedButtonId));
+
+        GUIEvent guiEvent;
+        if(clickedButtonId < 0) {
+            guiEvent = new GUICloseEvent(session, player);
+        } else {
+            guiEvent = new GUIBedrockClickEvent(session, player, guiElement, clickedButtonId);
+        }
+
+        if(guiEvent instanceof GUICloseEvent) {
+            inventoryState.removeAttribute(BedrockUtil.getFormButtonIndexToElementKey(clickedButtonId));
+            BedrockUtil.removeGUISessionOfBedrockPlayer(player);
+        }
+
+        //Call the event where needed
+        Bukkit.getScheduler().runTask(InventoryGUIAPI.getInstance(), () -> {
+            fireEvent(guiEvent, guiElement, guiEvent);
+        });
     }
 
     /**

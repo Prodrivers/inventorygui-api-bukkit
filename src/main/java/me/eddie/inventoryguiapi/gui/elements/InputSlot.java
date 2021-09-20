@@ -286,6 +286,11 @@ public class InputSlot extends AbstractGUIElement {
     }
 
     @Override
+    public FormImage getFormImage(Player viewer, GUISession session) {
+        return FormImage.DEFAULT;
+    }
+
+    @Override
     public boolean canAutoInsertIntoSlot(Player viewer, GUISession session) {
         return getActionHandler().shouldAllowAutoInsert(viewer, session);
     }

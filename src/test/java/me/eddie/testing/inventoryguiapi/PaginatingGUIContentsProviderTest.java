@@ -196,7 +196,7 @@ public class PaginatingGUIContentsProviderTest {
     private List<GUIElement> genElementList(int amount){
         List<GUIElement> res = new ArrayList<GUIElement>();
         for(int i =0;i<amount;i++){
-            ItemStack it = new ItemStack(Material.WOOD);
+            ItemStack it = new ItemStack(Material.OAK_WOOD);
             GUIElement elem = GUIElementFactory.createActionItem(
                     GUIElementFactory.formatItem(it, "Name", "Some lore"),
                     new Callback<Player>() {

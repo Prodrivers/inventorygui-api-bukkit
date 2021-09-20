@@ -1,11 +1,11 @@
 package me.eddie.inventoryguiapi.gui.guis;
 
-import me.eddie.inventoryguiapi.gui.contents.GUIContentsProvider;
-import me.eddie.inventoryguiapi.gui.contents.GUIPopulator;
-import me.eddie.inventoryguiapi.gui.contents.PaginatingGUIContentsProvider;
+import me.eddie.inventoryguiapi.gui.contents.*;
 import me.eddie.inventoryguiapi.gui.elements.GUIElement;
 import me.eddie.inventoryguiapi.gui.session.GUISession;
+import me.eddie.inventoryguiapi.gui.view.BedrockGUIPresenter;
 import me.eddie.inventoryguiapi.gui.view.GUIPresenter;
+import me.eddie.inventoryguiapi.gui.view.InventoryGUIPresenter;
 import me.eddie.inventoryguiapi.util.Callback;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
@@ -177,14 +177,19 @@ public class GUIBuilder {
         if(title == null){
             throw new IllegalArgumentException("GUI Title cannot be null!");
         }
-        if(title.length() > GUIContentsProvider.MAX_TITLE_LENGTH){
-            throw new IllegalArgumentException("GUI Title too long for Minecaft! Max length is "+GUIContentsProvider.MAX_TITLE_LENGTH);
+        if(title.length() > GUIContentsProvider.MAX_JAVA_TITLE_LENGTH){
+            throw new IllegalArgumentException("GUI Title too long for Minecaft! Max length is "+GUIContentsProvider.MAX_JAVA_TITLE_LENGTH);
         }
         if(elements == null){
             throw new IllegalArgumentException("GUI list of elements cannot be null!");
         }
+        return contentsProvider(generateContentsProvider(title, elements, paginate, showPageNum, showPageCount));
+    }
+
+    private GUIContentsProvider generateContentsProvider(final String title, final List<GUIElement> elements,
+                                                 boolean paginate, final boolean showPageNum, final boolean showPageCount) {
         if(paginate){
-            return paginatingContentsProvider(new PaginatingGUIContentsProvider() {
+            return new PaginatingGUIContentsProvider() {
                 @Override
                 public void genContents(Player viewer, GUISession session, Callback<List<GUIElement>> callback) {
                     callback.call(elements);
@@ -204,9 +209,9 @@ public class GUIBuilder {
                 public boolean showPageCountInTitle() {
                     return showPageCount;
                 }
-            });
+            };
         }
-        return contentsProvider(new GUIContentsProvider() {
+        return new GUIContentsProvider() {
             @Override
             public void genContents(Player viewer, int page, GUISession session, Callback<GUIContentsResponse> callback) {
                 if(page == 1){
@@ -220,7 +225,66 @@ public class GUIBuilder {
             public void genTitle(Player viewer, int page, GUISession session, Callback<String> callback) {
                 callback.call(title);
             }
-        });
+        };
+    }
+
+    /**
+     * Specify what GUIElements this GUI should display and the title of the GUI if Inventory-based.
+     * @param title The title of the GUI
+     * @param elements The list of elements to display
+     * @param paginate Whether or not to automatically split these GUIElements into pages
+     * @param showPageNum Whether or not to show the page number in the title, ignored if paginate is False
+     * @param showPageCount Whether or not to show the page count in the title, ignored if paginate is False
+     * @return Returns self
+     */
+    public GUIBuilder inventoryContents(final String title, final List<GUIElement> elements,
+                               boolean paginate, final boolean showPageNum, final boolean showPageCount){
+        if(title == null){
+            throw new IllegalArgumentException("GUI Title cannot be null!");
+        }
+        if(title.length() > GUIContentsProvider.MAX_JAVA_TITLE_LENGTH){
+            throw new IllegalArgumentException("GUI Title too long for Minecaft! Max length is "+GUIContentsProvider.MAX_JAVA_TITLE_LENGTH);
+        }
+        if(elements == null){
+            throw new IllegalArgumentException("GUI list of elements cannot be null!");
+        }
+        if(this.contentsProvider == null || !(this.contentsProvider instanceof PlatformDifferentiatedGUIContentsProvider)) {
+            contentsProvider(new PlatformDifferentiatedGUIContentsProvider());
+        }
+        GUIContentsProvider provider = generateContentsProvider(title, elements, paginate, showPageNum, showPageCount);
+        if(!((PlatformDifferentiatedGUIContentsProvider) this.contentsProvider).hasBedrockProvider()) {
+            ((PlatformDifferentiatedGUIContentsProvider) this.contentsProvider).setBedrockProvider(provider);
+        }
+        ((PlatformDifferentiatedGUIContentsProvider) this.contentsProvider).setJavaProvider(provider);
+        return this;
+    }
+
+    /**
+     * Specify what GUIElements this GUI should display and the title of the GUI if Bedrock Forms-based.
+     * @param title The title of the GUI
+     * @param elements The list of elements to display
+     * @param paginate Whether or not to automatically split these GUIElements into pages
+     * @param showPageNum Whether or not to show the page number in the title, ignored if paginate is False
+     * @param showPageCount Whether or not to show the page count in the title, ignored if paginate is False
+     * @return Returns self
+     */
+    public GUIBuilder bedrockContents(final String title, final List<GUIElement> elements,
+                                        boolean paginate, final boolean showPageNum, final boolean showPageCount){
+        if(title == null){
+            throw new IllegalArgumentException("GUI Title cannot be null!");
+        }
+        if(elements == null){
+            throw new IllegalArgumentException("GUI list of elements cannot be null!");
+        }
+        if(this.contentsProvider == null || !(this.contentsProvider instanceof PlatformDifferentiatedGUIContentsProvider)) {
+            contentsProvider(new PlatformDifferentiatedGUIContentsProvider());
+        }
+        GUIContentsProvider provider = generateContentsProvider(title, elements, paginate, showPageNum, showPageCount);
+        if(!((PlatformDifferentiatedGUIContentsProvider) this.contentsProvider).hasJavaProvider()) {
+            ((PlatformDifferentiatedGUIContentsProvider) this.contentsProvider).setJavaProvider(provider);
+        }
+        ((PlatformDifferentiatedGUIContentsProvider) this.contentsProvider).setBedrockProvider(provider);
+        return this;
     }
 
     /**
@@ -271,11 +335,16 @@ public class GUIBuilder {
         }
 
         if(guiPopulator == null){
-            guiPopulator = new GUIPopulator(); //The default populator
+            if(guiPresenter instanceof BedrockGUIPresenter) {
+                // Native Bedrock forms have no size limitation, defaulting to unlimited GUI populator
+                guiPopulator = new UnlimitedGUIPopulator();
+            } else {
+                guiPopulator = new LimitedGUIPopulator(); //The default populator
+            }
         }
 
         if(guiPresenter == null){
-            guiPresenter = new GUIPresenter(); //The default presenter
+            guiPresenter = new InventoryGUIPresenter(); //The default presenter
         }
 
         switch(guiStateBehaviour){

@@ -3,6 +3,7 @@ package me.eddie.testing.inventoryguiapi;
 import junit.framework.Assert;
 import me.eddie.inventoryguiapi.gui.contents.GUIContentsProvider;
 import me.eddie.inventoryguiapi.gui.contents.GUIPopulator;
+import me.eddie.inventoryguiapi.gui.contents.LimitedGUIPopulator;
 import me.eddie.inventoryguiapi.gui.elements.AbstractGUIElement;
 import me.eddie.inventoryguiapi.gui.elements.GUIElement;
 import me.eddie.inventoryguiapi.gui.elements.GUIElementFactory;
@@ -68,7 +69,7 @@ public class GUIPopulatorTest {
     }
 
     private void testElementPlacementAndButtonPlacement(final int invSize, final int elemAmt, final boolean setDesiredSlots, final int desiredSlotOffsets, final boolean shouldHaveNextPage){ //Test if page buttons were generated correctly for given size inv and num of elems
-        GUIPopulator populator = new GUIPopulator(); //Default GUIPopulator
+        GUIPopulator populator = new LimitedGUIPopulator(); //Default GUIPopulator
         GUIBuilder guiBuilder = new GUIBuilder().guiStateBehaviour(GUIBuilder.GUIStateBehaviour.LOCAL_TO_SESSION)
                 .size(invSize) //Any valid size
                 .dynamicallyResizeToWrapContent(false); //Doesn't affect placement whether enabled or disabled
@@ -147,7 +148,7 @@ public class GUIPopulatorTest {
             if(slot >= maxSize){ //If too big, wrap back around
                 slot -= maxSize;
             }
-            ItemStack it = new ItemStack(Material.WOOD);
+            ItemStack it = new ItemStack(Material.OAK_WOOD);
             GUIElement elem = GUIElementFactory.createActionItem(slot,
                     GUIElementFactory.formatItem(it, "Name", "Some lore"),
                     new Callback<Player>() {

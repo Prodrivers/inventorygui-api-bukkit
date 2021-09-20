@@ -13,6 +13,7 @@ import me.eddie.inventoryguiapi.gui.session.GUISession;
 import me.eddie.inventoryguiapi.gui.session.GUIState;
 import me.eddie.inventoryguiapi.gui.session.InventoryState;
 import me.eddie.inventoryguiapi.gui.view.GUIPresenter;
+import me.eddie.inventoryguiapi.gui.view.InventoryGUIPresenter;
 import me.eddie.inventoryguiapi.plugin.InventoryGUIAPI;
 import me.eddie.inventoryguiapi.util.Callback;
 import org.bukkit.Bukkit;
@@ -131,7 +132,7 @@ public class GUIPresenterTest {
         Mockito.when(prevOpenView.getTopInventory()).thenReturn(previouslyOpen);
         Mockito.when(viewer.getOpenInventory()).thenReturn(prevOpenView); //Set this as what the player was looking at
 
-        GUIPresenter presenter = new GUIPresenter(); //The object to test
+        GUIPresenter presenter = new InventoryGUIPresenter(); //The object to test
 
         //check generated inv is correct
         final Callback<Inventory> validateInventory = new Callback<Inventory>() {
@@ -188,7 +189,7 @@ public class GUIPresenterTest {
             GUIElement elem;
             if(i % 2 == 0) { //For even values of i
                 elem = GUIElementFactory.createActionItem(!setDesiredSlots ? AbstractGUIElement.NO_DESIRED_SLOT : i+desiredSlotoffset, //The desired slot if wanted
-                        GUIElementFactory.formatItem(new ItemStack(Material.WOOD), "item " + i, "Some lore"),
+                        GUIElementFactory.formatItem(new ItemStack(Material.OAK_WOOD), "item " + i, "Some lore"),
                         new Callback<Player>() {
                             @Override
                             public void call(Player param) {

@@ -15,9 +15,9 @@ import java.util.List;
 public interface GUIContentsProvider {
 
     /**
-     * The maximum allowed title length of Minecraft
+     * The maximum allowed title length of Minecraft Java Edition
      */
-    public static final int MAX_TITLE_LENGTH = 32;
+    public static final int MAX_JAVA_TITLE_LENGTH = 32;
 
     /**
      * The calculated result of a call to {@link #genContents(Player, int, GUISession, Callback)}

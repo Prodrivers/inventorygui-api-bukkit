@@ -49,7 +49,7 @@ public class GUIElementFactoryTest {
         assertNoError(new Runnable() { //Assert we can format and item and it work correct
             @Override
             public void run() {
-                ItemStack item = new FakeItemStack(Material.WOOL);
+                ItemStack item = new FakeItemStack(Material.WHITE_WOOL);
                 ItemStack formatted = GUIElementFactory.formatItem(item, "Name", "Lore");
                 Assert.assertNotNull(formatted);
                 Assert.assertEquals("Name", formatted.getItemMeta().getDisplayName());
@@ -67,7 +67,7 @@ public class GUIElementFactoryTest {
         assertError(new Runnable() { //Assert that we can't format with a null name
             @Override
             public void run() {
-                ItemStack item = new FakeItemStack(Material.WOOL);
+                ItemStack item = new FakeItemStack(Material.WHITE_WOOL);
                 GUIElementFactory.formatItem(item, null, "");
             }
         }, IllegalArgumentException.class);

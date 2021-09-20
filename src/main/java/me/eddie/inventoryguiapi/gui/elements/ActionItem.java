@@ -13,14 +13,16 @@ public class ActionItem extends AbstractGUIElement {
 
     private ItemStack display;
     private ActionHandler actionHandler;
+    private FormImage formImage;
 
     /**
      * Construct a new ActionItem with a desired slot
      * @param slot The slot that this ActionItem should be placed into
      * @param display The display ItemStack
      * @param actionHandler The action for when this is clicked
+     * @param formImage Image to use in Bedrock Form GUI, in place of a texture of provided displayItem
      */
-    public ActionItem(int slot, ItemStack display, ActionHandler actionHandler){
+    public ActionItem(int slot, ItemStack display, ActionHandler actionHandler, FormImage formImage){
         super(slot);
         if(display == null){
             throw new IllegalArgumentException("Display item must not be null");
@@ -30,6 +32,17 @@ public class ActionItem extends AbstractGUIElement {
         if(actionHandler == null){
             throw new IllegalArgumentException("ActionHandler must not be null");
         }
+        this.formImage = formImage;
+    }
+
+    /**
+     * Construct a new ActionItem with a desired slot
+     * @param slot The slot that this ActionItem should be placed into
+     * @param display The display ItemStack
+     * @param actionHandler The action for when this is clicked
+     */
+    public ActionItem(int slot, ItemStack display, ActionHandler actionHandler){
+        this(slot, display, actionHandler, FormImage.DEFAULT);
     }
 
     /**
@@ -75,11 +88,20 @@ public class ActionItem extends AbstractGUIElement {
     }
 
     public ItemStack getDisplayItem() {
-        return display;
+        return this.display;
     }
 
     public void setDisplayItem(ItemStack display) {
         this.display = display;
+    }
+
+    @Override
+    public FormImage getFormImage(Player viewer, GUISession session) {
+        return this.formImage;
+    }
+
+    public void setFormImage(FormImage formImage) {
+        this.formImage = formImage;
     }
 
     @Override
