@@ -1,19 +1,17 @@
 buildscript {
     repositories {
         mavenCentral()
-        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
-}
-
-plugins {
-    id 'maven'
 }
 
 group 'me.eddie'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
-apply plugin: 'maven'
+apply plugin: 'maven-publish'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -33,12 +31,12 @@ compileJava.options.encoding = 'UTF-8'
 
 
 dependencies {
-	compile group: 'javax.xml.ws', name: 'jaxws-api', version: '2.3.1'
-    compile group: 'org.spigotmc', name: 'spigot-api', version: '1.14.4-R0.1-SNAPSHOT' //Spigot (Bukkit for Minecraft 1.9+) API
-    testCompile group: 'junit', name: 'junit', version: '4.13'
-    testCompile group: 'org.powermock', name: 'powermock-module-junit4', version: '2.0.2'
-    testCompile group: 'org.powermock', name: 'powermock-api-mockito2', version: '2.0.2'
-    testCompile group: 'org.javassist', name: 'javassist', version: '3.27.0-GA'
+    implementation group: 'javax.xml.ws', name: 'jaxws-api', version: '2.3.1'
+    implementation group: 'org.spigotmc', name: 'spigot-api', version: '1.14.4-R0.1-SNAPSHOT'
+    testImplementation group: 'junit', name: 'junit', version: '4.13'
+    testImplementation group: 'org.powermock', name: 'powermock-module-junit4', version: '2.0.2'
+    testImplementation group: 'org.powermock', name: 'powermock-api-mockito2', version: '2.0.2'
+    testImplementation group: 'org.javassist', name: 'javassist', version: '3.27.0-GA'
 }
 
 task generateApiDocs(type: Javadoc) {
