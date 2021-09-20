@@ -12,6 +12,7 @@ import me.eddie.inventoryguiapi.gui.view.GUIPresenter;
 import me.eddie.inventoryguiapi.gui.view.InventoryGUIPresenter;
 import me.eddie.inventoryguiapi.plugin.EventCaller;
 import me.eddie.inventoryguiapi.plugin.InventoryGUIAPI;
+import me.eddie.inventoryguiapi.util.BedrockUtil;
 import me.eddie.inventoryguiapi.util.Callback;
 import me.eddie.inventoryguiapi.util.GUISettingValidation;
 import me.eddie.inventoryguiapi.util.StackCompatibilityUtil;
@@ -504,6 +505,35 @@ public class GUI implements InventoryGUI {
                 ((Cancellable) receivedEvent).setCancelled(true);
             }
         }
+    }
+
+    @Override
+    public void handleBedrockResponse(GUISession session, Player player, int clickedButtonId) {
+        GUIState guiState = session.getGUIState();
+        InventoryState inventoryState = guiState.getExistingInventoryState(session.getPage());
+        if(inventoryState == null) {
+            throw new RuntimeException("No InventoryState present for GUI interacted with!");
+        }
+
+
+        GUIElement guiElement = (GUIElement) inventoryState.getAttribute(BedrockUtil.getFormButtonIndexToElementKey(clickedButtonId));
+
+        GUIEvent guiEvent;
+        if(clickedButtonId < 0) {
+            guiEvent = new GUICloseEvent(session, player);
+        } else {
+            guiEvent = new GUIBedrockClickEvent(session, player, guiElement, clickedButtonId);
+        }
+
+        if(guiEvent instanceof GUICloseEvent) {
+            inventoryState.removeAttribute(BedrockUtil.getFormButtonIndexToElementKey(clickedButtonId));
+            BedrockUtil.removeGUISessionOfBedrockPlayer(player);
+        }
+
+        //Call the event where needed
+        Bukkit.getScheduler().runTask(InventoryGUIAPI.getInstance(), () -> {
+            fireEvent(guiEvent, guiElement, guiEvent);
+        });
     }
 
     /**

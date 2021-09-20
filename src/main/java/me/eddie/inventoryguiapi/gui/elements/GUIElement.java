@@ -43,6 +43,14 @@ public interface GUIElement {
     public ItemStack getDisplay(Player viewer, GUISession session);
 
     /**
+     * This method returns the Form Image (Bedrock) to be displayed in the GUI for a player.
+     * @param viewer The player viewing the inventory. In the case of SharedGUI's the viewer should be ignored.
+     * @param session The GUISession that this GUIElement is being used with
+     * @return The form image type to display to the viewer
+     */
+    public FormImage getFormImage(Player viewer, GUISession session);
+
+    /**
      * Whether or not viewers can use Minecraft's auto-insert (Shift click) feature with this slot.
      * If they can then shift-clicking will be able to target this slot. Shift click events won't be passed directly
      * to the GUIElement though, they are instead turned into pickup and place events and those are passed to GUIElements

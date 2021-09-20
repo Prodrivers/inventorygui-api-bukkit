@@ -1,10 +1,13 @@
 package me.eddie.inventoryguiapi.gui.session;
 
 import me.eddie.inventoryguiapi.gui.guis.InventoryGUI;
+import me.eddie.inventoryguiapi.util.BedrockUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.InventoryView;
+
+import java.util.Optional;
 
 /**
  * Represents a viewing session for a GUI.
@@ -20,10 +23,12 @@ public class GUISession implements InventoryHolder {
             return null;
         }
         InventoryView oInv = player.getOpenInventory();
-        if(oInv == null){
-            return null;
+        if(oInv != null) {
+            return extractSession(oInv.getTopInventory()); //Get the inventory the player is looking at (Bottom is always their own inventory)
         }
-        return extractSession(oInv.getTopInventory()); //Get the inventory the player is looking at (Bottom is always their own inventory)
+
+        Optional<GUISession> bedrockGUISession = BedrockUtil.getGUISessionOfBedrockPlayer(player);
+        return bedrockGUISession.orElse(null);
     }
 
     /**
