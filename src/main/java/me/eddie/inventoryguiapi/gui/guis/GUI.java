@@ -117,10 +117,14 @@ public class GUI implements InventoryGUI {
         guiPopulator.populateGUI(session, player, new Callback<Void>() {
             @Override
             public void call(Void param) {
-                guiPresenter.updateView(player, guiSess); //Show the player the GUI
-                GUIOpenEvent evt = new GUIOpenEvent(guiSess, player);
-                EventCaller.fireThroughBukkit(evt);
-                fireEventThroughActionListeners(evt);
+                try {
+                    guiPresenter.updateView(player, guiSess); //Show the player the GUI
+                    GUIOpenEvent evt = new GUIOpenEvent(guiSess, player);
+                    EventCaller.fireThroughBukkit(evt);
+                    fireEventThroughActionListeners(evt);
+                } catch(Exception e) {
+                    InventoryGUIAPI.getInstance().getLogger().severe(e.getLocalizedMessage());
+                }
             }
         });
     }
@@ -364,21 +368,7 @@ public class GUI implements InventoryGUI {
             return;
         }
         //Call the event where needed
-        EventCaller.fireThroughBukkit(guiEvent);
-        if(guiEvent instanceof Cancellable && ((Cancellable) guiEvent).isCancelled()){ //If event is cancelled don't do any more
-            return;
-        }
-        fireEventThroughActionListeners(guiEvent);
-        if(guiEvent instanceof Cancellable && ((Cancellable) guiEvent).isCancelled()){ //If event is cancelled don't do any more
-            return;
-        }
-
-        if(guiElement != null){
-            guiElement.onEvent(guiEvent);
-        }
-        else {
-            clickEvent.setCancelled(true); //Cancel the bukkit event if they clicked in an empty position in the GUI and that click wasn't cancelled.
-        }
+        fireEvent(guiEvent, guiElement, clickEvent);
     }
 
     //Splits an auto-insert (Shift click) event into pickup and place events that can be handled on a per-slot basis
@@ -493,6 +483,27 @@ public class GUI implements InventoryGUI {
             }
         }
         return;
+    }
+
+    protected <T> void fireEvent(GUIEvent guiEvent, GUIElement guiElement, T receivedEvent) {
+        EventCaller.fireThroughBukkit(guiEvent);
+        if(guiEvent instanceof Cancellable && ((Cancellable) guiEvent).isCancelled()){ //If event is cancelled don't do any more
+            return;
+        }
+        fireEventThroughActionListeners(guiEvent);
+        if(guiEvent instanceof Cancellable && ((Cancellable) guiEvent).isCancelled()){ //If event is cancelled don't do any more
+            return;
+        }
+
+        if(guiElement != null){
+            guiElement.onEvent(guiEvent);
+        }
+        else {
+            //Cancel the bukkit event if they clicked in an empty position in the GUI and that click wasn't cancelled.
+            if(receivedEvent instanceof Cancellable){
+                ((Cancellable) receivedEvent).setCancelled(true);
+            }
+        }
     }
 
     /**
