@@ -2,6 +2,7 @@ package me.eddie.inventoryguiapi.gui.guis;
 
 import me.eddie.inventoryguiapi.gui.contents.GUIContentsProvider;
 import me.eddie.inventoryguiapi.gui.contents.GUIPopulator;
+import me.eddie.inventoryguiapi.gui.contents.LimitedGUIPopulator;
 import me.eddie.inventoryguiapi.gui.events.GUIUpdateEvent;
 import me.eddie.inventoryguiapi.gui.session.GUISession;
 import me.eddie.inventoryguiapi.gui.session.GUIState;
@@ -41,7 +42,7 @@ public class SharedGUI extends GUI implements SharedInventoryGUI {
 
     public SharedGUI(InventoryType inventoryType, int size, boolean isDynamicSize, GUIContentsProvider contentsProvider,
                      GUIActionListener... guiActionListeners){
-        this(inventoryType, size, isDynamicSize, contentsProvider, new GUIPopulator(), new GUIPresenter(), guiActionListeners);
+        super(inventoryType, size, isDynamicSize, contentsProvider, guiActionListeners);
     }
 
     @Override

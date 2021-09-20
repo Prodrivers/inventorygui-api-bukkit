@@ -1,12 +1,12 @@
 package me.eddie.testing.inventoryguiapi;
 
 import junit.framework.Assert;
-import me.eddie.inventoryguiapi.gui.contents.GUIPopulator;
+import me.eddie.inventoryguiapi.gui.contents.LimitedGUIPopulator;
 import me.eddie.inventoryguiapi.gui.elements.GUIElement;
 import me.eddie.inventoryguiapi.gui.elements.GUIElementFactory;
 import me.eddie.inventoryguiapi.gui.events.GUIEvent;
 import me.eddie.inventoryguiapi.gui.guis.*;
-import me.eddie.inventoryguiapi.gui.view.GUIPresenter;
+import me.eddie.inventoryguiapi.gui.view.InventoryGUIPresenter;
 import me.eddie.inventoryguiapi.plugin.InventoryGUIAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.event.inventory.InventoryType;
@@ -205,8 +205,8 @@ public class GUIBuilderTest {
                 }};
                 guiBuilder.actionListeners(actionListeners);
                 guiBuilder.dynamicallyResizeToWrapContent(false);
-                guiBuilder.populator(new GUIPopulator());
-                guiBuilder.presenter(new GUIPresenter());
+                guiBuilder.populator(new LimitedGUIPopulator());
+                guiBuilder.presenter(new InventoryGUIPresenter());
                 InventoryGUI gui = guiBuilder.build();
                 Assert.assertTrue(gui instanceof SharedGUI); //Assert created correct GUI type
                 Assert.assertEquals(InventoryType.ANVIL.getDefaultSize(), gui.getMaximumGUISize());

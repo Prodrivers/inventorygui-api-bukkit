@@ -2,12 +2,14 @@ package me.eddie.inventoryguiapi.gui.guis;
 
 import me.eddie.inventoryguiapi.gui.contents.GUIContentsProvider;
 import me.eddie.inventoryguiapi.gui.contents.GUIPopulator;
+import me.eddie.inventoryguiapi.gui.contents.LimitedGUIPopulator;
 import me.eddie.inventoryguiapi.gui.elements.GUIElement;
 import me.eddie.inventoryguiapi.gui.events.*;
 import me.eddie.inventoryguiapi.gui.session.GUISession;
 import me.eddie.inventoryguiapi.gui.session.GUIState;
 import me.eddie.inventoryguiapi.gui.session.InventoryState;
 import me.eddie.inventoryguiapi.gui.view.GUIPresenter;
+import me.eddie.inventoryguiapi.gui.view.InventoryGUIPresenter;
 import me.eddie.inventoryguiapi.plugin.EventCaller;
 import me.eddie.inventoryguiapi.plugin.InventoryGUIAPI;
 import me.eddie.inventoryguiapi.util.Callback;
@@ -95,7 +97,7 @@ public class GUI implements InventoryGUI {
      * @param guiActionListeners Any ActionListeners that you want to specify. These receive GUIEvents before GUIElements do so that you can further customise the GUI's behaviour
      */
     public GUI(InventoryType inventoryType, int size, boolean isDynamicSize, GUIContentsProvider contentsProvider, GUIActionListener... guiActionListeners){
-        this(inventoryType, size, isDynamicSize, contentsProvider, new GUIPopulator(), new GUIPresenter(), guiActionListeners);
+        this(inventoryType, size, isDynamicSize, contentsProvider, new LimitedGUIPopulator(), new InventoryGUIPresenter(), guiActionListeners);
     }
 
     @Override

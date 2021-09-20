@@ -1,11 +1,10 @@
 package me.eddie.inventoryguiapi.gui.guis;
 
-import me.eddie.inventoryguiapi.gui.contents.GUIContentsProvider;
-import me.eddie.inventoryguiapi.gui.contents.GUIPopulator;
-import me.eddie.inventoryguiapi.gui.contents.PaginatingGUIContentsProvider;
+import me.eddie.inventoryguiapi.gui.contents.*;
 import me.eddie.inventoryguiapi.gui.elements.GUIElement;
 import me.eddie.inventoryguiapi.gui.session.GUISession;
 import me.eddie.inventoryguiapi.gui.view.GUIPresenter;
+import me.eddie.inventoryguiapi.gui.view.InventoryGUIPresenter;
 import me.eddie.inventoryguiapi.util.Callback;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
@@ -183,8 +182,13 @@ public class GUIBuilder {
         if(elements == null){
             throw new IllegalArgumentException("GUI list of elements cannot be null!");
         }
+        return contentsProvider(generateContentsProvider(title, elements, paginate, showPageNum, showPageCount));
+    }
+
+    private GUIContentsProvider generateContentsProvider(final String title, final List<GUIElement> elements,
+                                                 boolean paginate, final boolean showPageNum, final boolean showPageCount) {
         if(paginate){
-            return paginatingContentsProvider(new PaginatingGUIContentsProvider() {
+            return new PaginatingGUIContentsProvider() {
                 @Override
                 public void genContents(Player viewer, GUISession session, Callback<List<GUIElement>> callback) {
                     callback.call(elements);
@@ -204,9 +208,9 @@ public class GUIBuilder {
                 public boolean showPageCountInTitle() {
                     return showPageCount;
                 }
-            });
+            };
         }
-        return contentsProvider(new GUIContentsProvider() {
+        return new GUIContentsProvider() {
             @Override
             public void genContents(Player viewer, int page, GUISession session, Callback<GUIContentsResponse> callback) {
                 if(page == 1){
@@ -220,7 +224,7 @@ public class GUIBuilder {
             public void genTitle(Player viewer, int page, GUISession session, Callback<String> callback) {
                 callback.call(title);
             }
-        });
+        };
     }
 
     /**
@@ -271,11 +275,11 @@ public class GUIBuilder {
         }
 
         if(guiPopulator == null){
-            guiPopulator = new GUIPopulator(); //The default populator
+            guiPopulator = new LimitedGUIPopulator(); //The default populator
         }
 
         if(guiPresenter == null){
-            guiPresenter = new GUIPresenter(); //The default presenter
+            guiPresenter = new InventoryGUIPresenter(); //The default presenter
         }
 
         switch(guiStateBehaviour){

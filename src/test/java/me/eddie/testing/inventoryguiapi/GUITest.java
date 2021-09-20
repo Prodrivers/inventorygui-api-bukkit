@@ -162,7 +162,7 @@ public class GUITest {
                 List<GUIElement> result = new ArrayList<GUIElement>();
                 for(int i=0;i<elementAmount;i++){
                     final int slotShouldEndUp = i;
-                    ItemStack display = new FakeItemStack(Material.WOOD);
+                    ItemStack display = new FakeItemStack(Material.OAK_WOOD);
                     display.setItemMeta(new FakeItemMeta("Name "+i, new ArrayList<String>(),
                             new HashMap<Enchantment, Integer>(), new ArrayList<ItemFlag>(), false));
 
