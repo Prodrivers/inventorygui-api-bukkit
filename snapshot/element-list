@@ -1,0 +1,11 @@
+me.eddie.inventoryguiapi.examples
+me.eddie.inventoryguiapi.gui.contents
+me.eddie.inventoryguiapi.gui.elements
+me.eddie.inventoryguiapi.gui.events
+me.eddie.inventoryguiapi.gui.guis
+me.eddie.inventoryguiapi.gui.session
+me.eddie.inventoryguiapi.gui.view
+me.eddie.inventoryguiapi.language
+me.eddie.inventoryguiapi.listeners
+me.eddie.inventoryguiapi.plugin
+me.eddie.inventoryguiapi.util
