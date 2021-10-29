@@ -1,6 +1,10 @@
 # InventoryGUIAPI
 Advanced Minecraft GUI Library/API, built on top of Bukkit.
 
+This is forked version with substantial API changes and transparent support for native Bedrock forms through Geyser's Floodgate 2.0.
+
+A backward-compatible fork, with upgrades for latest versions of Spigot (post-flattening), Java and Gradle, is available in the `legacy` branch.
+
 # Usage
 This API is available on a Maven repository.
 
@@ -29,3 +33,4 @@ Documentation is available on Prodrivers Sources for:
 
 * [latest release](http://inventoryguiapi.sources.prodrivers.fr)
 * [latest commit](http://inventoryguiapi.sources.prodrivers.fr/snapshot)
+* [latest legacy fork](http://inventoryguiapi.sources.prodrivers.fr/legacy)
