@@ -526,10 +526,8 @@ public class GUI implements InventoryGUI {
             guiEvent = new GUIBedrockClickEvent(session, player, guiElement, clickedButtonId);
         }
 
-        if(guiEvent instanceof GUICloseEvent) {
-            inventoryState.removeAttribute(BedrockUtil.getFormButtonIndexToElementKey(clickedButtonId));
-            BedrockUtil.removeGUISessionOfBedrockPlayer(player);
-        }
+        inventoryState.removeAttribute(BedrockUtil.getFormButtonIndexToElementKey(clickedButtonId));
+        BedrockUtil.removeGUISessionOfBedrockPlayer(player);
 
         //Call the event where needed
         Bukkit.getScheduler().runTask(InventoryGUIAPI.getInstance(), () -> {
