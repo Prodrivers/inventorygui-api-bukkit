@@ -48,3 +48,11 @@ jobs:
           folder: build/docs/javadoc
           target-folder: snapshot
         if: ${{ github.event_name == 'push' }}
+      - name: Deploy Javadoc (legacy)
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: gh-pages
+          clean: true
+          folder: build/docs/javadoc
+          target-folder: legacy
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/legacy' }}
