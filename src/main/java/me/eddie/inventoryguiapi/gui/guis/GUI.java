@@ -29,6 +29,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 /**
  * Default implementation of a GUI
@@ -124,7 +125,7 @@ public class GUI implements InventoryGUI {
                     EventCaller.fireThroughBukkit(evt);
                     fireEventThroughActionListeners(evt);
                 } catch(Exception e) {
-                    InventoryGUIAPI.getInstance().getLogger().severe(e.getLocalizedMessage());
+                    InventoryGUIAPI.getInstance().getLogger().log(Level.SEVERE, "Unable to open menu " + this, e);
                 }
             }
         });
