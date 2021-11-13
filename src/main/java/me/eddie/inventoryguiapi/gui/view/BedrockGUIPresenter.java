@@ -81,18 +81,25 @@ public class BedrockGUIPresenter implements GUIPresenter {
                         name = display.getType().name();
                     }
                     me.eddie.inventoryguiapi.gui.elements.FormImage image = element.getFormImage(viewer, session);
+                    if(image == null || image.getType() == null || image.getPath() == null) {
+                        image = me.eddie.inventoryguiapi.gui.elements.FormImage.DEFAULT;
+                    }
                     if(image == me.eddie.inventoryguiapi.gui.elements.FormImage.DEFAULT) {
                         if(BedrockTextureLib.getInstance().getTextureMapper() != null) {
                             String texturePath = BedrockTextureLib.getInstance().getTextureMapper().getTexturePath(display.getType());
-                            image = new me.eddie.inventoryguiapi.gui.elements.FormImage(me.eddie.inventoryguiapi.gui.elements.FormImage.Type.PATH, texturePath);
+                            if(texturePath != null) {
+                                image = new me.eddie.inventoryguiapi.gui.elements.FormImage(me.eddie.inventoryguiapi.gui.elements.FormImage.Type.PATH, texturePath);
+                            } else {
+                                image = me.eddie.inventoryguiapi.gui.elements.FormImage.NONE;
+                            }
                         } else {
                             image = me.eddie.inventoryguiapi.gui.elements.FormImage.NONE;
                         }
                     }
-                    if(image == me.eddie.inventoryguiapi.gui.elements.FormImage.NONE) {
+                    if(image.getType().getName() == null) {
                         builder.button(name);
                     } else {
-                        builder.button(name, FormImage.Type.valueOf(image.getType().getName()), image.getPath());
+                        builder.button(name, FormImage.Type.getByName(image.getType().getName()), image.getPath());
                     }
                 }
                 inventoryState.putAttribute(BedrockUtil.getFormButtonIndexToElementKey(buttonIndex), element);
