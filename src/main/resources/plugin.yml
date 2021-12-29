@@ -3,4 +3,4 @@ author: 'Eddie'
 main: me.eddie.inventoryguiapi.plugin.InventoryGUIAPI
 version: 2.0.0-SNAPSHOT
 api-version: 1.14
-softdepend: [floodgate]
+softdepend: [floodgate, BedrockTextureLib]

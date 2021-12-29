@@ -7,6 +7,7 @@ import me.eddie.inventoryguiapi.gui.guis.SharedInventoryGUI;
 import me.eddie.inventoryguiapi.gui.session.GUISession;
 import me.eddie.inventoryguiapi.gui.session.GUIState;
 import me.eddie.inventoryguiapi.gui.session.InventoryState;
+import me.eddie.inventoryguiapi.plugin.InventoryGUIAPI;
 import me.eddie.inventoryguiapi.util.BedrockUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -85,14 +86,21 @@ public class BedrockGUIPresenter implements GUIPresenter {
                         image = me.eddie.inventoryguiapi.gui.elements.FormImage.DEFAULT;
                     }
                     if(image == me.eddie.inventoryguiapi.gui.elements.FormImage.DEFAULT) {
-                        if(BedrockTextureLib.getInstance().getTextureMapper() != null) {
-                            String texturePath = BedrockTextureLib.getInstance().getTextureMapper().getTexturePath(display.getType());
-                            if(texturePath != null) {
-                                image = new me.eddie.inventoryguiapi.gui.elements.FormImage(me.eddie.inventoryguiapi.gui.elements.FormImage.Type.PATH, texturePath);
+                        try {
+                            // Check presence of BedrockTextureLib
+                            Class.forName("fr.prodrivers.bukkit.bedrocktexturelib.BedrockTextureLib");
+
+                            if(BedrockTextureLib.getInstance().getTextureMapper() != null) {
+                                String texturePath = BedrockTextureLib.getInstance().getTextureMapper().getTexturePath(display.getType());
+                                if(texturePath != null) {
+                                    image = new me.eddie.inventoryguiapi.gui.elements.FormImage(me.eddie.inventoryguiapi.gui.elements.FormImage.Type.PATH, texturePath);
+                                } else {
+                                    image = me.eddie.inventoryguiapi.gui.elements.FormImage.NONE;
+                                }
                             } else {
                                 image = me.eddie.inventoryguiapi.gui.elements.FormImage.NONE;
                             }
-                        } else {
+                        } catch(ClassNotFoundException e) {
                             image = me.eddie.inventoryguiapi.gui.elements.FormImage.NONE;
                         }
                     }
