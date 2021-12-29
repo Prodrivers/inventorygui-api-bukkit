@@ -156,6 +156,8 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><span class="member-name-link"><a href="me/eddie/inventoryguiapi/gui/elements/InputSlot.html#canAutoInsertIntoSlot(org.bukkit.entity.Player,me.eddie.inventoryguiapi.gui.session.GUISession)">canAutoInsertIntoSlot(Player, GUISession)</a></span> - Method in class me.eddie.inventoryguiapi.gui.elements.<a href="me/eddie/inventoryguiapi/gui/elements/InputSlot.html" title="class in me.eddie.inventoryguiapi.gui.elements">InputSlot</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="member-name-link"><a href="me/eddie/inventoryguiapi/gui/elements/LabelItem.html#canAutoInsertIntoSlot(org.bukkit.entity.Player,me.eddie.inventoryguiapi.gui.session.GUISession)">canAutoInsertIntoSlot(Player, GUISession)</a></span> - Method in class me.eddie.inventoryguiapi.gui.elements.<a href="me/eddie/inventoryguiapi/gui/elements/LabelItem.html" title="class in me.eddie.inventoryguiapi.gui.elements">LabelItem</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="me/eddie/inventoryguiapi/util/StackCompatibilityUtil.html#canStack(org.bukkit.inventory.ItemStack...)">canStack(ItemStack...)</a></span> - Static method in class me.eddie.inventoryguiapi.util.<a href="me/eddie/inventoryguiapi/util/StackCompatibilityUtil.html" title="class in me.eddie.inventoryguiapi.util">StackCompatibilityUtil</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="me/eddie/inventoryguiapi/examples/CommandInventoryExample.html" title="class in me.eddie.inventoryguiapi.examples"><span class="type-name-link">CommandInventoryExample</span></a> - Class in <a href="me/eddie/inventoryguiapi/examples/package-summary.html">me.eddie.inventoryguiapi.examples</a></dt>
@@ -216,6 +218,15 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Create an InputSlot - A GUIElement that accepts user input
  This InputSlot will have no preference for which slot it should be displayed in.</div>
+</dd>
+<dt><span class="member-name-link"><a href="me/eddie/inventoryguiapi/gui/elements/GUIElementFactory.html#createLabelItem(int,org.bukkit.inventory.ItemStack)">createLabelItem(int, ItemStack)</a></span> - Static method in class me.eddie.inventoryguiapi.gui.elements.<a href="me/eddie/inventoryguiapi/gui/elements/GUIElementFactory.html" title="class in me.eddie.inventoryguiapi.gui.elements">GUIElementFactory</a></dt>
+<dd>
+<div class="block">Create a LabelItem - A GUIElement that displays text</div>
+</dd>
+<dt><span class="member-name-link"><a href="me/eddie/inventoryguiapi/gui/elements/GUIElementFactory.html#createLabelItem(org.bukkit.inventory.ItemStack)">createLabelItem(ItemStack)</a></span> - Static method in class me.eddie.inventoryguiapi.gui.elements.<a href="me/eddie/inventoryguiapi/gui/elements/GUIElementFactory.html" title="class in me.eddie.inventoryguiapi.gui.elements">GUIElementFactory</a></dt>
+<dd>
+<div class="block">Create a LabelItem - A GUIElement that displays text
+ This LabelItem will have no preference for which slot it should be displayed in.</div>
 </dd>
 <dt><span class="member-name-link"><a href="me/eddie/inventoryguiapi/gui/guis/GUI.html#createNewSession(org.bukkit.entity.Player,int)">createNewSession(Player, int)</a></span> - Method in class me.eddie.inventoryguiapi.gui.guis.<a href="me/eddie/inventoryguiapi/gui/guis/GUI.html" title="class in me.eddie.inventoryguiapi.gui.guis">GUI</a></dt>
 <dd>&nbsp;</dd>
@@ -374,7 +385,11 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><span class="member-name-link"><a href="me/eddie/inventoryguiapi/gui/elements/InputSlot.html#getDisplay(org.bukkit.entity.Player,me.eddie.inventoryguiapi.gui.session.GUISession)">getDisplay(Player, GUISession)</a></span> - Method in class me.eddie.inventoryguiapi.gui.elements.<a href="me/eddie/inventoryguiapi/gui/elements/InputSlot.html" title="class in me.eddie.inventoryguiapi.gui.elements">InputSlot</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="member-name-link"><a href="me/eddie/inventoryguiapi/gui/elements/LabelItem.html#getDisplay(org.bukkit.entity.Player,me.eddie.inventoryguiapi.gui.session.GUISession)">getDisplay(Player, GUISession)</a></span> - Method in class me.eddie.inventoryguiapi.gui.elements.<a href="me/eddie/inventoryguiapi/gui/elements/LabelItem.html" title="class in me.eddie.inventoryguiapi.gui.elements">LabelItem</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="me/eddie/inventoryguiapi/gui/elements/ActionItem.html#getDisplayItem()">getDisplayItem()</a></span> - Method in class me.eddie.inventoryguiapi.gui.elements.<a href="me/eddie/inventoryguiapi/gui/elements/ActionItem.html" title="class in me.eddie.inventoryguiapi.gui.elements">ActionItem</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="member-name-link"><a href="me/eddie/inventoryguiapi/gui/elements/LabelItem.html#getDisplayItem()">getDisplayItem()</a></span> - Method in class me.eddie.inventoryguiapi.gui.elements.<a href="me/eddie/inventoryguiapi/gui/elements/LabelItem.html" title="class in me.eddie.inventoryguiapi.gui.elements">LabelItem</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="me/eddie/inventoryguiapi/gui/session/InventoryState.html#getElementInSlot(int)">getElementInSlot(int)</a></span> - Method in class me.eddie.inventoryguiapi.gui.session.<a href="me/eddie/inventoryguiapi/gui/session/InventoryState.html" title="class in me.eddie.inventoryguiapi.gui.session">InventoryState</a></dt>
 <dd>
@@ -399,6 +414,8 @@ loadScripts(document, 'script');</script>
 <div class="block">This method returns the Form Image (Bedrock) to be displayed in the GUI for a player.</div>
 </dd>
 <dt><span class="member-name-link"><a href="me/eddie/inventoryguiapi/gui/elements/InputSlot.html#getFormImage(org.bukkit.entity.Player,me.eddie.inventoryguiapi.gui.session.GUISession)">getFormImage(Player, GUISession)</a></span> - Method in class me.eddie.inventoryguiapi.gui.elements.<a href="me/eddie/inventoryguiapi/gui/elements/InputSlot.html" title="class in me.eddie.inventoryguiapi.gui.elements">InputSlot</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="member-name-link"><a href="me/eddie/inventoryguiapi/gui/elements/LabelItem.html#getFormImage(org.bukkit.entity.Player,me.eddie.inventoryguiapi.gui.session.GUISession)">getFormImage(Player, GUISession)</a></span> - Method in class me.eddie.inventoryguiapi.gui.elements.<a href="me/eddie/inventoryguiapi/gui/elements/LabelItem.html" title="class in me.eddie.inventoryguiapi.gui.elements">LabelItem</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="me/eddie/inventoryguiapi/gui/guis/GUI.html#getGuiPopulator()">getGuiPopulator()</a></span> - Method in class me.eddie.inventoryguiapi.gui.guis.<a href="me/eddie/inventoryguiapi/gui/guis/GUI.html" title="class in me.eddie.inventoryguiapi.gui.guis">GUI</a></dt>
 <dd>
@@ -857,6 +874,18 @@ loadScripts(document, 'script');</script>
 </dl>
 <h2 class="title" id="I:L">L</h2>
 <dl class="index">
+<dt><a href="me/eddie/inventoryguiapi/gui/elements/LabelItem.html" title="class in me.eddie.inventoryguiapi.gui.elements"><span class="type-name-link">LabelItem</span></a> - Class in <a href="me/eddie/inventoryguiapi/gui/elements/package-summary.html">me.eddie.inventoryguiapi.gui.elements</a></dt>
+<dd>
+<div class="block">Represents a GUIElement that displays text.</div>
+</dd>
+<dt><span class="member-name-link"><a href="me/eddie/inventoryguiapi/gui/elements/LabelItem.html#%3Cinit%3E(int,org.bukkit.inventory.ItemStack)">LabelItem(int, ItemStack)</a></span> - Constructor for class me.eddie.inventoryguiapi.gui.elements.<a href="me/eddie/inventoryguiapi/gui/elements/LabelItem.html" title="class in me.eddie.inventoryguiapi.gui.elements">LabelItem</a></dt>
+<dd>
+<div class="block">Construct a new LabelItem with a desired slot</div>
+</dd>
+<dt><span class="member-name-link"><a href="me/eddie/inventoryguiapi/gui/elements/LabelItem.html#%3Cinit%3E(org.bukkit.inventory.ItemStack)">LabelItem(ItemStack)</a></span> - Constructor for class me.eddie.inventoryguiapi.gui.elements.<a href="me/eddie/inventoryguiapi/gui/elements/LabelItem.html" title="class in me.eddie.inventoryguiapi.gui.elements">LabelItem</a></dt>
+<dd>
+<div class="block">Construct a new LabelItem with no desired slot</div>
+</dd>
 <dt><a href="me/eddie/inventoryguiapi/gui/contents/LimitedGUIPopulator.html" title="class in me.eddie.inventoryguiapi.gui.contents"><span class="type-name-link">LimitedGUIPopulator</span></a> - Class in <a href="me/eddie/inventoryguiapi/gui/contents/package-summary.html">me.eddie.inventoryguiapi.gui.contents</a></dt>
 <dd>
 <div class="block">Responsible for Calculating the positions that GUIElements need to go into in the displayed, size-limited GUI,
@@ -961,6 +990,8 @@ loadScripts(document, 'script');</script>
 <div class="block">This method defines the behaviour of this GUIElement.</div>
 </dd>
 <dt><span class="member-name-link"><a href="me/eddie/inventoryguiapi/gui/elements/InputSlot.html#onEvent(me.eddie.inventoryguiapi.gui.events.GUIEvent)">onEvent(GUIEvent)</a></span> - Method in class me.eddie.inventoryguiapi.gui.elements.<a href="me/eddie/inventoryguiapi/gui/elements/InputSlot.html" title="class in me.eddie.inventoryguiapi.gui.elements">InputSlot</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="member-name-link"><a href="me/eddie/inventoryguiapi/gui/elements/LabelItem.html#onEvent(me.eddie.inventoryguiapi.gui.events.GUIEvent)">onEvent(GUIEvent)</a></span> - Method in class me.eddie.inventoryguiapi.gui.elements.<a href="me/eddie/inventoryguiapi/gui/elements/LabelItem.html" title="class in me.eddie.inventoryguiapi.gui.elements">LabelItem</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="me/eddie/inventoryguiapi/gui/guis/GUIActionListener.html#onEvent(me.eddie.inventoryguiapi.gui.events.GUIEvent)">onEvent(GUIEvent)</a></span> - Method in interface me.eddie.inventoryguiapi.gui.guis.<a href="me/eddie/inventoryguiapi/gui/guis/GUIActionListener.html" title="interface in me.eddie.inventoryguiapi.gui.guis">GUIActionListener</a></dt>
 <dd>
@@ -1085,6 +1116,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Sets the desired display position of this GUIElement.</div>
 </dd>
 <dt><span class="member-name-link"><a href="me/eddie/inventoryguiapi/gui/elements/ActionItem.html#setDisplayItem(org.bukkit.inventory.ItemStack)">setDisplayItem(ItemStack)</a></span> - Method in class me.eddie.inventoryguiapi.gui.elements.<a href="me/eddie/inventoryguiapi/gui/elements/ActionItem.html" title="class in me.eddie.inventoryguiapi.gui.elements">ActionItem</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="member-name-link"><a href="me/eddie/inventoryguiapi/gui/elements/LabelItem.html#setDisplayItem(org.bukkit.inventory.ItemStack)">setDisplayItem(ItemStack)</a></span> - Method in class me.eddie.inventoryguiapi.gui.elements.<a href="me/eddie/inventoryguiapi/gui/elements/LabelItem.html" title="class in me.eddie.inventoryguiapi.gui.elements">LabelItem</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="me/eddie/inventoryguiapi/gui/contents/GUIContentsProvider.GUIContentsResponse.html#setElements(java.util.List)">setElements(List&lt;GUIElement&gt;)</a></span> - Method in class me.eddie.inventoryguiapi.gui.contents.<a href="me/eddie/inventoryguiapi/gui/contents/GUIContentsProvider.GUIContentsResponse.html" title="class in me.eddie.inventoryguiapi.gui.contents">GUIContentsProvider.GUIContentsResponse</a></dt>
 <dd>&nbsp;</dd>

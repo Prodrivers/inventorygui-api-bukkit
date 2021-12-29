@@ -165,6 +165,18 @@ loadScripts(document, 'script');</script>
 <div class="block">Create an InputSlot - A GUIElement that accepts user input
  This InputSlot will have no preference for which slot it should be displayed in.</div>
 </div>
+<div class="col-first even-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table"><code>static <a href="LabelItem.html" title="class in me.eddie.inventoryguiapi.gui.elements">LabelItem</a></code></div>
+<div class="col-second even-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#createLabelItem(int,org.bukkit.inventory.ItemStack)">createLabelItem</a></span>&#8203;(int&nbsp;desiredSlot,
+ org.bukkit.inventory.ItemStack&nbsp;displayItem)</code></div>
+<div class="col-last even-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table">
+<div class="block">Create a LabelItem - A GUIElement that displays text</div>
+</div>
+<div class="col-first odd-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table"><code>static <a href="LabelItem.html" title="class in me.eddie.inventoryguiapi.gui.elements">LabelItem</a></code></div>
+<div class="col-second odd-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#createLabelItem(org.bukkit.inventory.ItemStack)">createLabelItem</a></span>&#8203;(org.bukkit.inventory.ItemStack&nbsp;displayItem)</code></div>
+<div class="col-last odd-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table">
+<div class="block">Create a LabelItem - A GUIElement that displays text
+ This LabelItem will have no preference for which slot it should be displayed in.</div>
+</div>
 <div class="col-first even-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table"><code>static org.bukkit.inventory.ItemStack</code></div>
 <div class="col-second even-row-color method-summary-table-tab1 method-summary-table-tab4 method-summary-table"><code><span class="member-name-link"><a href="#formatItem(org.bukkit.inventory.ItemStack,java.lang.String,java.lang.String...)">formatItem</a></span>&#8203;(org.bukkit.inventory.ItemStack&nbsp;base,
  <a href="https://docs.oracle.com/en/java/javase/16/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;displayName,
@@ -357,6 +369,35 @@ loadScripts(document, 'script');</script>
 <dd><code>formImage</code> - Image to use in Bedrock Form GUI, in place of a texture of provided displayItem</dd>
 <dt>Returns:</dt>
 <dd>The created ActionItem</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createLabelItem(org.bukkit.inventory.ItemStack)">
+<h3>createLabelItem</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="LabelItem.html" title="class in me.eddie.inventoryguiapi.gui.elements">LabelItem</a></span>&nbsp;<span class="element-name">createLabelItem</span>&#8203;<span class="parameters">(org.bukkit.inventory.ItemStack&nbsp;displayItem)</span></div>
+<div class="block">Create a LabelItem - A GUIElement that displays text
+ This LabelItem will have no preference for which slot it should be displayed in. If you wish to specify a slot, use <a href="#createLabelItem(int,org.bukkit.inventory.ItemStack)"><code>createLabelItem(int, ItemStack)</code></a></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>displayItem</code> - The item to display in the slot that this GUIElement occupies.</dd>
+<dt>Returns:</dt>
+<dd>The created LabelItem</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createLabelItem(int,org.bukkit.inventory.ItemStack)">
+<h3>createLabelItem</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="LabelItem.html" title="class in me.eddie.inventoryguiapi.gui.elements">LabelItem</a></span>&nbsp;<span class="element-name">createLabelItem</span>&#8203;<span class="parameters">(int&nbsp;desiredSlot,
+ org.bukkit.inventory.ItemStack&nbsp;displayItem)</span></div>
+<div class="block">Create a LabelItem - A GUIElement that displays text</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>desiredSlot</code> - The slot you wish for this GUIElement to be placed into in the GUI. Use <a href="#createActionItem(org.bukkit.inventory.ItemStack,me.eddie.inventoryguiapi.gui.elements.ActionItem.ActionHandler)"><code>createActionItem(ItemStack, ActionItem.ActionHandler)</code></a> if you do not care about the placement position of this item.</dd>
+<dd><code>displayItem</code> - The item to display in the slot that this GUIElement occupies.</dd>
+<dt>Returns:</dt>
+<dd>The created LabelItem</dd>
 </dl>
 </section>
 </li>
