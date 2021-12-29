@@ -1,7 +1,10 @@
 package me.eddie.inventoryguiapi.gui.view;
 
 import fr.prodrivers.bukkit.bedrocktexturelib.BedrockTextureLib;
+import me.eddie.inventoryguiapi.gui.elements.ActionItem;
 import me.eddie.inventoryguiapi.gui.elements.GUIElement;
+import me.eddie.inventoryguiapi.gui.elements.InputSlot;
+import me.eddie.inventoryguiapi.gui.elements.LabelItem;
 import me.eddie.inventoryguiapi.gui.guis.InventoryGUI;
 import me.eddie.inventoryguiapi.gui.guis.SharedInventoryGUI;
 import me.eddie.inventoryguiapi.gui.session.GUISession;
@@ -58,8 +61,7 @@ public class BedrockGUIPresenter implements GUIPresenter {
             SortedSet<Integer> keys = new TreeSet<>(guiElements.keySet());
 
             SimpleForm.Builder builder = SimpleForm.builder()
-                    .title(inventoryState.getTitle())
-                    .content(""); // No content
+                    .title(inventoryState.getTitle()); // No content
 
             int buttonIndex = 0;
             for(int i = 0; i <= keys.last(); i++) {
@@ -104,13 +106,25 @@ public class BedrockGUIPresenter implements GUIPresenter {
                             image = me.eddie.inventoryguiapi.gui.elements.FormImage.NONE;
                         }
                     }
-                    if(image.getType().getName() == null) {
-                        builder.button(name);
+
+                    if(element instanceof LabelItem) {
+                        builder.content(name);
+                    } else if(element instanceof InputSlot) {
+                        InventoryGUIAPI.getInstance().getLogger().severe("InputSlot is not supported by Bedrock presenter. Omitted.");
                     } else {
-                        builder.button(name, FormImage.Type.getByName(image.getType().getName()), image.getPath());
+                        if(!(element instanceof ActionItem)) {
+                            InventoryGUIAPI.getInstance().getLogger().warning("Unsupported GUI element by Bedrock presenter: " + element.getClass().getName() + ". Displayed as a button.");
+                        }
+
+                        if(image.getType().getName() == null) {
+                            builder.button(name);
+                        } else {
+                            builder.button(name, FormImage.Type.getByName(image.getType().getName()), image.getPath());
+                        }
+
+                        inventoryState.putAttribute(BedrockUtil.getFormButtonIndexToElementKey(buttonIndex), element);
+                        buttonIndex++;
                     }
-                    inventoryState.putAttribute(BedrockUtil.getFormButtonIndexToElementKey(buttonIndex), element);
-                    buttonIndex++;
                 }
             }
 

@@ -132,4 +132,24 @@ public class GUIElementFactory {
     public static ActionItem createActionItem(int desiredSlot, ItemStack displayItem, ActionItem.ActionHandler actionHandler, FormImage formImage){
         return new ActionItem(desiredSlot, displayItem, actionHandler, formImage);
     }
+
+    /**
+     * Create a LabelItem - A GUIElement that displays text
+     * This LabelItem will have no preference for which slot it should be displayed in. If you wish to specify a slot, use {@link #createLabelItem(int, ItemStack)}
+     * @param displayItem The item to display in the slot that this GUIElement occupies.
+     * @return The created LabelItem
+     */
+    public static LabelItem createLabelItem(ItemStack displayItem){
+        return createLabelItem(AbstractGUIElement.NO_DESIRED_SLOT, displayItem);
+    }
+
+    /**
+     * Create a LabelItem - A GUIElement that displays text
+     * @param desiredSlot The slot you wish for this GUIElement to be placed into in the GUI. Use {@link #createActionItem(ItemStack, ActionItem.ActionHandler)} if you do not care about the placement position of this item.
+     * @param displayItem The item to display in the slot that this GUIElement occupies.
+     * @return The created LabelItem
+     */
+    public static LabelItem createLabelItem(int desiredSlot, ItemStack displayItem){
+        return new LabelItem(desiredSlot, displayItem);
+    }
 }
