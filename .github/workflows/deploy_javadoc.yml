@@ -24,6 +24,7 @@ jobs:
       - name: Create JavaDoc overview page
         uses: docker://pandoc/core:2.14.1
         with:
+          entrypoint: /usr/local/bin/pandoc
           args: >-
             --standalone
             -c empty.css
