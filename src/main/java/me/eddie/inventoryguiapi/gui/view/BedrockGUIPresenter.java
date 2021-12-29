@@ -62,7 +62,7 @@ public class BedrockGUIPresenter implements GUIPresenter {
                     .content(""); // No content
 
             int buttonIndex = 0;
-            for(int i = 0; i < keys.last(); i++) {
+            for(int i = 0; i <= keys.last(); i++) {
                 GUIElement element = inventoryState.getElementInSlot(i);
                 ItemStack display = element == null ? null : element.getDisplay(viewer, session);
                 if(display != null && !display.getType().equals(Material.AIR)) {
@@ -109,9 +109,9 @@ public class BedrockGUIPresenter implements GUIPresenter {
                     } else {
                         builder.button(name, FormImage.Type.getByName(image.getType().getName()), image.getPath());
                     }
+                    inventoryState.putAttribute(BedrockUtil.getFormButtonIndexToElementKey(buttonIndex), element);
+                    buttonIndex++;
                 }
-                inventoryState.putAttribute(BedrockUtil.getFormButtonIndexToElementKey(buttonIndex), element);
-                buttonIndex++;
             }
 
             BedrockUtil.addGUISessionOfBedrockPlayer(bedrockPlayer.get(), session);
