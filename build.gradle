@@ -9,6 +9,7 @@ buildscript {
 
 group 'fr.prodrivers.bukkit'
 version '2.0.0-SNAPSHOT'
+description 'Advanced Minecraft GUI Library/API, built on top of Bukkit, with Java and Bedrock client transparent support. '
 
 apply plugin: 'java'
 apply plugin: 'maven-publish'
@@ -34,7 +35,7 @@ compileJava.options.encoding = 'UTF-8'
 
 dependencies {
     implementation group: 'javax.xml.ws', name: 'jaxws-api', version: '2.3.1'
-    implementation group: 'org.spigotmc', name: 'spigot-api', version: '1.17.1-R0.1-SNAPSHOT'
+    implementation group: 'org.spigotmc', name: 'spigot-api', version: project.property('spigot.artifact.version')
     implementation group: 'fr.prodrivers.bukkit', name: 'bedrock-texture-lib', version: '1.0.0-SNAPSHOT'
     implementation group: 'org.geysermc.floodgate', name: 'api', version: '2.0-SNAPSHOT'
     testImplementation group: 'junit', name: 'junit', version: '4.13.1'
@@ -52,6 +53,26 @@ task generateApiDocs(type: Javadoc) {
     exclude("me/eddie/inventoryguiapi/examples")
 
     destinationDir = reporting.file("javadocs")
+}
+
+processResources {
+    filesMatching('**/plugin.yml') {
+        expand(
+            'plugin': [
+                   'name':  project.property('plugin.name'),
+                   'mainClass': project.property('plugin.mainClass'),
+                   'author': project.property('plugin.author'),
+            ],
+            'version': project.version,
+            'description': project.description,
+            'url': project.property('url'),
+            'spigot': [
+                'api': [
+                    'version': project.property('spigot.api.version')
+                ]
+            ]
+        )
+    }
 }
 
 jar {

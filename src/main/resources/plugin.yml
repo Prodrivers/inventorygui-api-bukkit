@@ -1,6 +1,9 @@
-name: InventoryGUIAPI
-author: 'Eddie'
-main: me.eddie.inventoryguiapi.plugin.InventoryGUIAPI
-version: 2.0.0-SNAPSHOT
-api-version: 1.17
+name: ${plugin.name}
+main: ${plugin.mainClass}
+version: ${version}
+description: ${description}
+author: ${plugin.author}
+website: ${url}
+api-version: ${spigot.api.version}
+
 softdepend: [floodgate, BedrockTextureLib]
