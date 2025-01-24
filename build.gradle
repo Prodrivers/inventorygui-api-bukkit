@@ -93,13 +93,10 @@ publishing {
     }
     repositories {
         maven {
-            url "https://gitlab.com/api/v4/projects/18158800/packages/maven"
-            credentials(HttpHeaderCredentials) {
-                name = "Private-Token"
-                value = gitLabProdriversPrivateToken
-            }
-            authentication {
-                header(HttpHeaderAuthentication)
+            url "https://maven.pkg.github.com/Prodrivers/inventorygui-api-bukkit"
+            credentials {
+                username project.findProperty("prodrivers-repo.username") as String ?: System.getenv("PRODRIVERS_REPO_USERNAME")
+                password project.findProperty("prodrivers-repo.token") as String ?: System.getenv("PRODRIVERS_REPO_TOKEN")
             }
         }
     }
