@@ -14,8 +14,8 @@ description 'Advanced Minecraft GUI Library/API, built on top of Bukkit, with Ja
 apply plugin: 'java'
 apply plugin: 'maven-publish'
 
-sourceCompatibility = 17
-targetCompatibility = 17
+java.sourceCompatibility = JavaVersion.VERSION_21
+java.targetCompatibility = JavaVersion.VERSION_21
 
 repositories {
     flatDir {
