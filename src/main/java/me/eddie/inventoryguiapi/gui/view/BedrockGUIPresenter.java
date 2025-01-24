@@ -15,8 +15,7 @@ import me.eddie.inventoryguiapi.util.BedrockUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.geysermc.cumulus.SimpleForm;
-import org.geysermc.cumulus.response.SimpleFormResponse;
+import org.geysermc.cumulus.form.SimpleForm;
 import org.geysermc.cumulus.util.FormImage;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
 
@@ -72,8 +71,8 @@ public class BedrockGUIPresenter implements GUIPresenter {
                     if(display.getItemMeta() != null) {
                         if(display.getItemMeta().hasDisplayName()) {
                             name = display.getItemMeta().getDisplayName();
-                        } else if(display.getItemMeta().hasLocalizedName()) {
-                            name = display.getItemMeta().getLocalizedName();
+                        } else if(display.getItemMeta().hasItemName()) {
+                            name = display.getItemMeta().getItemName();
                         }
                         if(name != null && display.getItemMeta().getLore() != null) {
                             name += "\n";
@@ -119,7 +118,7 @@ public class BedrockGUIPresenter implements GUIPresenter {
                         if(image.getType().getName() == null) {
                             builder.button(name);
                         } else {
-                            builder.button(name, FormImage.Type.getByName(image.getType().getName()), image.getPath());
+                            builder.button(name, FormImage.Type.fromName(image.getType().getName()), image.getPath());
                         }
 
                         inventoryState.putAttribute(BedrockUtil.getFormButtonIndexToElementKey(buttonIndex), element);
@@ -130,16 +129,10 @@ public class BedrockGUIPresenter implements GUIPresenter {
 
             BedrockUtil.addGUISessionOfBedrockPlayer(bedrockPlayer.get(), session);
 
-            builder.responseHandler((form, responseData) -> {
-                SimpleFormResponse response = form.parseResponse(responseData);
-                int clickedButtonId = -1;
-                if(response.isCorrect()) {
-                    // Player did not close form
-                    clickedButtonId = response.getClickedButtonId();
-                }
-
-                session.getInventoryGUI().handleBedrockResponse(session, viewer, clickedButtonId);
-            });
+            builder.closedOrInvalidResultHandler(() -> session.getInventoryGUI().handleBedrockResponse(session, viewer, -1))
+                    .validResultHandler(response -> {
+                        session.getInventoryGUI().handleBedrockResponse(session, viewer, response.clickedButtonId());
+                    });
 
             bedrockPlayer.get().sendForm(builder.build());
         }
